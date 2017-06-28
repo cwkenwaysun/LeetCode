@@ -2,7 +2,7 @@
 // Space: O(n)
 
 // Manacher's Algorithm.
-class Solution {
+/*class Solution {
 public:
     string longestPalindrome(string s) {
         string T = preProcess(s);
@@ -50,4 +50,27 @@ private:
         ret += "#$";
         return ret;
     }
+};*/
+
+#include <string>
+using namespace std;
+class Solution {
+public:
+	string longestPalindrome(string s) {
+		int max_len = 0, l, r;
+		string ans = "";
+		for (int i = 0; i<s.size();) {
+			l = r = i;
+			while (r<s.size() - 1 && s[r] == s[r + 1]) r++;
+			i = r + 1;
+			while (r<s.size() - 1 && l>0 && s[r + 1] == s[l - 1]) {
+				r++; l--;
+			}
+			if (r - l + 1 > max_len) {
+				max_len = r - l + 1;
+				ans = s.substr(l, r - l + 1);
+			}
+		}
+		return ans;
+	}
 };
